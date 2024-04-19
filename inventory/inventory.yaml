@@ -1,0 +1,23 @@
+all:
+  hosts:
+    <HOSTNAME>:
+      ansible_host: <IPv4 ADDRESS>
+      ip: <IPv4 ADDRESS>
+      ip6: <IPv6 ADDRESS>
+      access_ip: <IPv4 ADDRESS>
+  children:
+    kube-master:
+      hosts:
+        <HOSTNAME>:
+    kube-node:
+      hosts:
+        <HOSTNAME>:
+    etcd:
+      hosts:
+        <HOSTNAME>:
+    k8s-cluster:
+      children:
+        kube-master:
+        kube-node:
+    calico-rr:
+
