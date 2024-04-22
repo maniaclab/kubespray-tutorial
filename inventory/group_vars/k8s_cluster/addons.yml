@@ -1,0 +1,112 @@
+---
+# Helm deployment
+helm_enabled: false
+
+# Registry deployment
+registry_enabled: false
+
+# Metrics Server deployment
+metrics_server_enabled: false
+
+# Rancher Local Path Provisioner
+local_path_provisioner_enabled: false
+
+# Local volume provisioner deployment
+local_volume_provisioner_enabled: false
+
+# CephFS provisioner deployment
+cephfs_provisioner_enabled: false
+
+# RBD provisioner deployment
+rbd_provisioner_enabled: false
+
+# Nginx ingress controller deployment
+ingress_nginx_enabled: true
+ingress_nginx_host_network: false
+ingress_publish_status_address: ""
+ingress_nginx_nodeselector:
+   kubernetes.io/os: "linux"
+ingress_nginx_tolerations:
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Equal"
+    value: ""
+    effect: "NoSchedule"
+ingress_nginx_namespace: "ingress-nginx"
+ingress_nginx_insecure_port: 80
+ingress_nginx_secure_port: 443
+ingress_nginx_configmap:
+  map-hash-bucket-size: "128"
+  ssl-protocols: "TLSv1.2 TLSv1.3"
+ingress_nginx_configmap_tcp_services:
+  9000: "default/example-go:8080"
+ingress_nginx_configmap_udp_services:
+  53: "kube-system/coredns:53"
+ingress_nginx_extra_args:
+  - --default-ssl-certificate=default/foo-tls
+ingress_nginx_termination_grace_period_seconds: 300
+ingress_nginx_class: nginx
+ingress_nginx_without_class: true
+ingress_nginx_default: true
+
+# ALB ingress controller deployment
+ingress_alb_enabled: false
+
+# Cert manager deployment
+cert_manager_enabled: true
+cert_manager_namespace: "cert-manager"
+cert_manager_tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    effect: NoSchedule
+cert_manager_affinity:
+ nodeAffinity:
+   preferredDuringSchedulingIgnoredDuringExecution:
+   - weight: 100
+     preference:
+       matchExpressions:
+       - key: node-role.kubernetes.io/control-plane
+         operator: In
+         values:
+         - ""
+cert_manager_nodeselector:
+  kubernetes.io/os: "linux"
+
+cert_manager_leader_election_namespace: kube-system
+
+# MetalLB deployment
+metallb_enabled: true
+metallb_speaker_enabled: "{{ metallb_enabled }}"
+metallb_version: v0.14.5
+metallb_protocol: "layer2"
+metallb_port: "7472"
+metallb_memberlist_port: "7946"
+metallb_config:
+  speaker:
+    nodeselector:
+      kubernetes.io/os: "linux"
+    tollerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+  controller:
+    nodeselector:
+      kubernetes.io/os: "linux"
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+  address_pools:
+    primary:
+      ip_range:
+        - <load balancer IP>/32
+      auto_assign: true
+
+argocd_enabled: false
+
+# The plugin manager for kubectl
+krew_enabled: false
+krew_root_dir: "/usr/local/krew"
+
+# Kube VIP
+kube_vip_enabled: false
