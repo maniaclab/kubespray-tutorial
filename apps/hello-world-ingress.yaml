@@ -8,10 +8,10 @@ spec:
   ingressClassName: "nginx"
   tls:
   - hosts:
-    - hello-world.<tutorial host>
+    - hello-world.<FQDN>
     secretName: hello-world-tls
   rules:
-  - host: hello-world.<tutorial host>
+  - host: hello-world.<FQDN>
     http:
         paths:
         - pathType: Prefix
