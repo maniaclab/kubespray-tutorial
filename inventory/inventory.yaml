@@ -5,6 +5,8 @@ all:
       ip: <IPv4 ADDRESS>
       ip6: <IPv6 ADDRESS>
       access_ip: <IPv4 ADDRESS>
+      node_labels:
+        node.kubernetes.io/exclude-from-external-load-balancers: false
   children:
     kube-master:
       hosts:
