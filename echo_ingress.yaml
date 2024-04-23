@@ -8,10 +8,10 @@ spec:
   ingressClassName: "nginx"
   tls:
   - hosts:
-    - echo1.c110.af.uchicago.edu
+    - echo1.<tutorial host>
     secretName: echo-tls
   rules:
-  - host: echo1.c110.af.uchicago.edu
+  - host: echo1.<tutorial host>
     http:
         paths:
         - pathType: Prefix
