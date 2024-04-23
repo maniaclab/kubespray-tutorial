@@ -99,7 +99,7 @@ metallb_config:
   address_pools:
     primary:
       ip_range:
-        - <load balancer IP>/32
+        - <Ingress IP>/32
       auto_assign: true
 
 argocd_enabled: false
