@@ -101,6 +101,8 @@ metallb_config:
       ip_range:
         - <Ingress IP>/32
       auto_assign: true
+  layer2:
+  - primary
 
 argocd_enabled: false
 
